@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .con {
+            width: 1200px;
+            margin: 0 auto;
+        }
+
+        .con-user {
+            width: 300px;
+            padding: 30px 50px;
+            border: 1px solid pink;
+            background-color: #eee;
+        }
+    </style>
+    <script src="js/jQuery v1.9.1.min.js"></script>
+    <script src="js/vue.js"></script>
+</head>
+
+<body>
+    <div class="con">
+        <div class="con-user">
+            <ul id="app">
+                <!-- <li v-for="item in uArr">
+                <a href="#" v-text="item"></a>
+            </li> -->
+                <div>
+                    请输入身份证号：
+                    <input type="text" v-model="uid">
+                    <button v-on:click="fn">搜索</button>
+                </div>
+                <div>
+                    <p>性别：{{ uArr.sex }}</p>
+                    <p>出生年月：{{ uArr.birthday }}</p>
+                    <p>地址：{{ uArr.area }}</p>
+                </div>
+            </ul>
+        </div>
+
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                uid: "612427199107220010",
+                uArr: [],
+            },
+            methods: {
+                fn: function () {
+                    // alert("qqqqqq");
+
+                }
+            },
+            created: function getArr() {
+                var ajArr = this;
+                $.ajax({
+                    type: "get",
+                    url: "http://apis.juhe.cn/idcard/index",
+                    data: {
+                        cardno: ajArr.uid,
+                        dtype: 'json',
+                        key: '44d1cbaa1665151ec1514e685b68a764'
+                    },
+                    dataType: "jsonp",
+                    success: function (info) {
+                        ajArr.uArr = info.result;
+                        // debugger
+                        console.log(ajArr.uArr);
+                    }
+                });
+            }
+
+        });
+
+        /*  $.ajax({
+             url: 'http://apis.juhe.cn/idcard/index',
+             type: 'get',
+             data: {
+                 // cardno: '420116199201203716',
+                 cardno: '612427199107220010',
+                 dtype: 'json',
+                 key: '44d1cbaa1665151ec1514e685b68a764'
+             },
+             dataType: 'jsonp',
+             success: function (info) {
+                 console.log(info)
+             },
+             error: function (error, Msgerror) {
+                 console.log(Msgerror)
+             }
+         }) */
+    </script>
+</body>
+
+</html>

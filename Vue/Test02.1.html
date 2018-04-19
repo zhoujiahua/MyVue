@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .con {
+            width: 1200px;
+            margin: 0 auto;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="con">
+        <div id="app">
+            <h1>{{ msg }}</h1>
+            <h2>表达式｛｛｝｝</h2>
+            <ul>
+                <li v-for="item in arr">
+                    <a href="#">{{ item }}</a>
+                </li>
+            </ul>
+            <h2>v-text 指令</h2>
+            <ul>
+                <li v-for="item in arr">
+                    <a href="#" v-text="item"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- JS -->
+    <script src="js/jQuery v1.9.1.min.js"></script>
+    <script src="js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                msg: 'Hello Vue',
+                arr: ['吃饭', '睡觉', '打豆豆', '流口水', '饿了'],
+                abData: [],
+            },
+            methods: {
+
+            },
+            created: function () {
+                debugger
+
+                var list = this;
+                $.ajax({
+                    type: "get",
+                    url: "http://v.juhe.cn/toutiao/index?type=&key=e6ce9e8fd1b6d1e6e40b74b9d6a6aff8",
+                    dataType: "jsonp",
+                    success: function (data) {
+                        debugger
+                        list.abData = data.data;
+                        console.log(list.abData);
+                    }
+                });
+            }
+
+        });
+    </script>
+
+</body>
+
+</html>

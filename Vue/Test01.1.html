@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue Js</title>
+    <script src="js/vue.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script> -->
+    
+
+</head>
+
+<body>
+    <div id="app">
+        <h1>{{ message }}</h1>
+        <p>{{ arr }}</p>
+        <button type="button" class="btn btn-large btn-block btn-primary" v-on:click="fn1('abc')">增加</button>
+        <button type="button" class="btn btn-large btn-block btn-primary" v-on:click="fn2(0)">删除</button>
+    </div>
+    
+    
+    
+    <!-- JS -->
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: '我是标题',
+                arr:['001','002','003','004']
+            },
+            methods:{
+                fn1:function(str){
+                    // console.log(this.arr[0])
+                    // alert(this)
+                    this.arr.push(str)
+                },
+                fn2:function(index){
+                    this.arr.splice(index,1)
+                }
+            }
+
+        })
+
+    </script>
+</body>
+
+</html>

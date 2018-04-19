@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue Js</title>
+    <script src="js/vue.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script> -->
+    <style>
+        .div1 {
+            width: 200px;
+            height: 150px;
+            background-color: red;
+            line-height: 150px;
+            text-align: center;
+            color: #fff;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="app">
+        <button type="button" @click="fn()">切换</button>
+        <div class="div1" v-show="bol" >{{ message }}</div>
+    </div>
+
+    <!-- JS -->
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello World!',
+                bol:true
+            },
+            methods:{
+                fn:function(){
+                    debugger
+                    this.bol=!this.bol;
+                    // alert(1);
+                    // alert(this.bol)
+                }
+            }
+
+        })
+
+    </script>
+</body>
+
+</html>

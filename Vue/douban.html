@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="Bxslider/jquery.bxslider.css">
+</head>
+
+<body>
+    <div id="test">
+        <ul class="movieSlider">
+            <li class="m-lst" v-for="(value,index) in hotMovie">
+                <div>
+                    <img class="img-responsive center-block" :src="value.images.large" />
+                </div>
+                <div class="caption">
+                    <!--:title为v-bind的缩写 旨在获取API中的title值赋给title属性-->
+                    <h4 class="h4 text-center" :title="value.title">{{value.title}}</h4>
+                    <p class="m-casts">
+                        <i class="glyphicon glyphicon-user"></i>
+                        <a class="u-cast" :href="val.alt" v-for="val in value.casts">{{val.name}}</a>
+                    </p>
+                    <p class="m-genres">
+                        <i class="glyphicon glyphicon-tags"></i>
+                        <span class="text-danger u-genres" v-for="val in value.genres">{{val}}</span>
+                    </p>
+                    <p class="m-time">
+                        <i class="glyphicon glyphicon-time"></i>
+                        <span class="text-success u-time">{{value.year}}</span>
+                    </p>
+                    <p class="text-right">
+                        <a href="03-detail.html" class="btn btn-info" @click="link(value.id)">查看详情</a>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <!-- JS -->
+    <!-- <script src="http://www.jq22.com/jquery/jquery-1.9.1.js"></script> -->
+    <script src="js/jQuery v1.9.1.min.js"></script>
+    <script src="Bxslider/jquery.bxslider.min.js"></script>
+    <script src="js/vue.js"></script>
+
+    <script type="text/javascript">
+        var vm = new Vue({
+            el: "#test",
+            data: {
+                hotMovie: []
+            },
+            methods: {
+                link: function (tt) {
+                    localStorage.setItem("id", tt)
+                }
+            },
+            created: function () {
+                let _self = this;
+                // debugger
+                $.ajax({
+                    type: "get",
+                    url: "https://api.douban.com//v2/movie/in_theaters",
+                    dataType: "jsonp",
+                    success: function (data) {
+                        // debugger
+                        // console.log(_self.hotMovie)
+                        _self.hotMovie = data.subjects;
+                        // this.hotMovie = data.subjects;
+
+                        // console.log(this.hotMovie);
+                        console.log(_self.hotMovie);
+
+                        // if(this.hotMovie ===_self.hotMovie){
+                        //     alert("ok");
+                        //     console.log("ok");
+                        // }
+
+                        // debugger
+                        // console.log(11);
+
+                    }
+                });
+            }
+        });
+
+
+        $(function () {
+            $(".movieSlider").bxSlider({
+                auto: true,
+                autoHover: true,
+                pager: false,
+                speed: 600,
+                pause: 4000,
+                slideWidth: 200,
+                moveSlides: 1,
+                minSlides: 4,
+                maxSlides: 5,
+                slideMargin: 10,
+            });
+        });
+        
+    </script>
+
+</body>
+
+</html>

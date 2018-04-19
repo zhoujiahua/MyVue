@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p>{{ message }}</p>
+        <p>{{ arr }}</p>
+        <p>{{ obj }}</p>
+        <p>{{ obj.name }}</p>
+        <p>{{ arry }}</p>
+        <p>{{ arry[1].name }}</p>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el:"#app",
+            data:{
+                message:"Hello World!",
+                arr:['sdafsd','784646456','enhfushdafjd','asegfdshb'],
+                obj:{
+                    id:1,
+                    name:'OMG',
+                    url:'http://www.beidu.com'
+                },
+                arry:[
+                    {id:01, name: "zhangsan"},
+                    {id:02, name: "lisi"},
+                    {id:03, name: "wangwu"},
+                ]
+            }
+        })
+    </script>
+</body>
+</html>

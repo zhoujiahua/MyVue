@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/jQuery v1.9.1.min.js"></script>
+</head>
+
+<body>
+
+    <script>
+       $.ajax({
+           url:'http://v.juhe.cn/toutiao/index',
+           type:'get',
+           data:{
+               dtype:'json',
+               key:'e6ce9e8fd1b6d1e6e40b74b9d6a6aff8',
+               type:'top'
+           },
+           dataType:'jsonp',
+           success:function(info){
+               console.log(info);
+           },
+           error:function(error,Msgerror){
+               console.log(Msgerror);
+           }
+
+       });
+    </script>
+</body>
+
+</html>

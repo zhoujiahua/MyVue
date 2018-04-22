@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .w {
+            margin: 0 auto;
+            width: 1200px;
+        }
+    </style>
+    <script src="js/jQuery v1.9.1.min.js"></script>
+    <script src="js/vue.js"></script>
+</head>
+
+<body>
+    <div class="main">
+        <div class="w" id="app">
+            <h1>{{ title }}</h1>
+            <ul v-for="iteam in arry">
+                <li>
+                    <h2>{{ iteam }}</h2>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- JS -->
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                title: "足球新闻",
+                arry:'',
+            },
+            methods: {
+
+            },
+            created: function () {
+                let conArry = this;
+                $.ajax({
+                    url: 'http://route.showapi.com/109-35',
+                    type: 'get',
+                    data: {
+                        // dtype:'json',
+                        showapi_appid: '62439',
+                        showapi_sign: '5c01b361fae148a7aad1c6d0eaa84d38',
+                        title: '足球',
+                        needAllList:'1',
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log(data);
+                        conArry.arry = data;
+                        // debugger
+                        // console.log(conArry.arry);
+                    },
+                    error: function (error, Msgerror) {
+                        console.log(Msgerror);
+                    }
+                });
+            }
+
+        });
+        /* $.ajax({
+            url: 'http://route.showapi.com/109-35',
+            type: 'get',
+            data: {
+                // dtype:'json',
+                showapi_appid: '62439',
+                showapi_sign: '5c01b361fae148a7aad1c6d0eaa84d38',
+                title: '足球'
+            },
+            dataType: 'json',
+            success: function (info) {
+                console.log(info);
+            },
+            error: function (error, Msgerror) {
+                console.log(Msgerror);
+            }
+        }); */
+    </script>
+</body>
+
+</html>

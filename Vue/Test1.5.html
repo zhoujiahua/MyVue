@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/jQuery v1.9.1.min.js"></script>
+    <script src="js/vue.js"></script>
+</head>
+
+<body>
+    <div class="opp">
+        <div id="app">
+
+        </div>
+    </div>
+    <!-- JS -->
+
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                msg: "",
+            },
+            template: '<h2>{{ msg }}</h2>',
+
+            methods: {
+
+            },
+            created: function () {
+
+            },
+
+        });
+        vm.msg = "Hello!";
+        
+    </script>
+
+
+</body>
+
+</html>

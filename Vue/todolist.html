@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul,
+        li {
+            list-style: none;
+        }
+
+        .Dapp {
+            width: 350px;
+            margin: 0 auto;
+            background-color: #eee;
+            padding: 30px 50px;
+        }
+
+        .add {
+            width: 150px;
+            margin-left: 10px;
+            height: 20px;
+        }
+
+        .finish {
+            color: #ccc;
+            text-decoration: line-through;
+        }
+    </style>
+    <script src="js/jQuery v1.9.1.min.js"></script>
+    <script src="js/vue.js"></script>
+
+</head>
+
+<body>
+    <div class="Dapp">
+        <div id="app">
+            <h1>任务列表</h1>
+            <p>任务总数：{{ arr.length }} 还有：3未完成；【
+                <span>完成</span>】</p>
+            <ul v-for="item in arr">
+                <li v-bind:class='{finish:item.bol}'>
+                    <label>
+                        <input type="checkbox" v-model="item.bol">{{ item.desc }}
+                    </label>
+                </li>
+            </ul>
+
+            <input type="text" class="add" v-model="msg">
+            <button @click='add()'>添加</button>
+        </div>
+
+
+    </div>
+    <!-- JS -->
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                // arr: ['吃饭', '睡觉', '打豆豆', '吃鸡', 'LOL', 'CS'],
+                arr: [{
+                        desc: '吃饭',
+                        bol: false
+                    },
+                    {
+                        desc: '睡觉',
+                        bol: false
+                    },
+                    {
+                        desc: '打豆豆',
+                        bol: false
+                    },
+                    {
+                        desc: '吃鸡',
+                        bol: false
+                    },
+
+                ],
+
+                msg: '',
+            },
+            methods: {
+                add: function () {
+                    if (this.msg != "") {
+                        this.arr.push({
+                            desc: this.msg,
+                            bol: false
+                        }), this.msg = ''
+                    } else {
+                        alert("输入错误");
+                    }
+
+                },
+                choose: function () {
+
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

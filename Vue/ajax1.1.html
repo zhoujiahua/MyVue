@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 
 <head>
     <meta charset="UTF-8">
@@ -48,41 +48,86 @@
             </ul>
         </div>
 
+        <div class="shuju">
+            <div id="sj">
+
+            </div>
+        </div>
+
     </div>
 
     <script>
         var vm = new Vue({
             el: "#app",
             data: {
-                uid: "612427199107220010",
+                uid: "",
                 uArr: [],
             },
             methods: {
                 fn: function () {
-                    // alert("qqqqqq");
+                    if (this.uid != "") {
+                        getAjax(this.uid);
+                    } else {
+                        alert("请输入正确的内容！");
+                    }
 
                 }
             },
-            created: function getArr() {
-                var ajArr = this;
-                $.ajax({
-                    type: "get",
-                    url: "http://apis.juhe.cn/idcard/index",
-                    data: {
-                        cardno: ajArr.uid,
-                        dtype: 'json',
-                        key: '44d1cbaa1665151ec1514e685b68a764'
-                    },
-                    dataType: "jsonp",
-                    success: function (info) {
-                        ajArr.uArr = info.result;
-                        // debugger
-                        console.log(ajArr.uArr);
-                    }
-                });
-            }
+            /*  created: function getArr() {
+                 var ajArr = this;
+                 $.ajax({
+                     type: "get",
+                     url: "http://apis.juhe.cn/idcard/index",
+                     data: {
+                         cardno: ajArr.uid,
+                         dtype: 'json',
+                         key: '44d1cbaa1665151ec1514e685b68a764'
+                     },
+                     dataType: "jsonp",
+                     success: function (info) {
+                         ajArr.uArr = info.result;
+                         // debugger
+                         console.log(ajArr.uArr);
+                     }
+                 });
+             } */
 
         });
+
+        // getAjax("612427199107220010");
+
+        // console.log(getAjax("612427199107220010"));
+
+        function getAjax(str) {
+            let arr = this;
+            $.ajax({
+                type: "get",
+                url: "http://apis.juhe.cn/idcard/index",
+                data: {
+                    cardno: str,
+                    dtype: 'json',
+                    key: '44d1cbaa1665151ec1514e685b68a764'
+                },
+                error: function (error, Message) {
+                    console.log(Message);
+                },
+                dataType: "jsonp",
+                success: function (info) {
+                    // arr = info.result;
+                    // console.log(info);
+                    arr.uArr = info.result;
+                    console.log(arr.uArr);
+                    // console.log(arr.uArr);
+                    // console.log(arr);
+                    // debugger
+
+                }
+            })
+            // debugger
+            // return arr;
+            console.log(arr);
+
+        }
 
         /*  $.ajax({
              url: 'http://apis.juhe.cn/idcard/index',

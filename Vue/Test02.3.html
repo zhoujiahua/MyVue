@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue Js</title>
+    <script src="js/vue.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script> -->
+    <style>
+        .div1 {
+            width: 200px;
+            height: 150px;
+            background-color: red;
+            line-height: 150px;
+            text-align: center;
+            color: #fff;
+        }
+        .red{
+            background-color: red;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="app">
+<button v-bind:class='{ red:true }'>按钮</button>
+    </div>
+
+    <!-- JS -->
+    <script>
+        /* v-bind 指令
+        *v-bind属性绑定：
+        *c-bind:class="{ 类名：表达式 }"
+        */
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                
+            }
+        });
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+<div>
+    <ul class="new-list"></ul>
+</div>
+
+    <!-- js -->
+    <script src="js/jQuery v1.9.1.min.js"></script>
+    <!-- <script src="js/vue.js"></script> -->
+    <!-- <script src="js/vue-resource1.5.0.js"></script> -->
+    <script>
+        $(function () {
+            $.ajax({
+                type: "get",
+                url: "http://route.showapi.com/109-35",
+                data: {
+                    showapi_appid: "62439",
+                    showapi_sign: "5c01b361fae148a7aad1c6d0eaa84d38",
+                    title: "足球",
+                },
+                dataType: "json",
+                success: function (info) {
+                    var arr = info.showapi_res_body.pagebean.contentlist;
+                    console.log(arr);
+                    for (var i = 0; i <= arr.length; i++) {
+                        $("<li>"+arr[i].title+"</li>").appendTo(".new-list");
+                    }
+                    // debugger
+                },
+                error: function (error, Messege) {
+                    console.log(Message);
+                }
+            });
+        })
+    </script>
+</body>
+
+</html>

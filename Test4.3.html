@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul,
+        li {
+            list-style: none;
+        }
+
+        [v-cloak] {
+            display: none;
+        }
+
+        .w {
+            width: 1200px;
+            margin: 0 auto;
+        }
+        .nav ul li{
+            float: left;
+            padding: 6px 15px;
+            border-right: 1px solid pink;
+        }
+        .clear{
+            clear: both;
+        }
+        .nav{
+            height: 200px;
+        }
+        .nav ul li:last-child{
+            border-right: none;
+        }
+
+        .news-list ul li {
+            margin: 3px 0;
+        }
+
+        .news-list li a {
+            text-decoration: none;
+            font: 500 15px/30px "Micorosoft YaHei";
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <!-- GET 请求  this.$http.get(
+            'url',
+            {params:{a:1,2....}},
+            then(
+                function(res){请求成功！},
+                function(res){请求失败})
+            );
+        -->
+        <button v-on:click="search()">按钮</button>
+        <button @click="channel()">频道</button>
+        <div class="nav w">
+            <ul v-for="iteam in menu">
+                <li v-text="iteam.name"></li>
+            </ul>
+        </div>
+        <div class="news-list w">
+            <ul v-for="iteam in arr">
+                <li>
+                    <a v-bind:href="iteam.link" target="_blank">{{ iteam.title }}</a>
+                </li>
+            </ul>
+
+        </div>
+
+    </div>
+
+    <!-- js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.0"></script>
+    <!-- <script src="js/vue.js"></script>
+    <script src="js/vue-resource1.5.0.js"></script> -->
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                arr: "",
+                menu:"",
+            },
+            methods: {
+                search: function () {
+                    this.$http.get(
+                        "http://route.showapi.com/109-35", {
+                            params: {
+                                showapi_appid: "62439",
+                                showapi_sign: "5c01b361fae148a7aad1c6d0eaa84d38",
+                                title: "足球",
+                                type: "json"
+                            }
+                        }
+                    ).then(
+                        function (res) {
+                            var ar = res.data.showapi_res_body.pagebean.contentlist;
+                            console.log(ar);
+                            this.arr = ar;
+                            console.log(this.arr);
+                        },
+                        function (res) {
+                            console.log(res.showapi_res_error);
+                        }
+                    );
+
+                },
+                channel: function () {
+                    this.$http.post(
+                        "http://route.showapi.com/109-34", {
+                            showapi_appid: "62439",
+                            showapi_sign: "5c01b361fae148a7aad1c6d0eaa84d38",
+                            type: "json"
+                        }, {
+                            emulateJSON: true
+                        }
+                    ).then(
+                        function (res) {
+                            var chArr = res.data.showapi_res_body.channelList;
+                            console.log(chArr);
+                            this.menu = chArr;
+                            // debugger
+                        },
+                        function (res) {
+                            console.log(res.status);
+                        }
+                    );
+                }
+
+            },
+        });
+    </script>
+</body>
+
+</html>

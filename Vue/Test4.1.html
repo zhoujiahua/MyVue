@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- GET 请求  this.$http.get(
+            'url',
+            {params:{a:1,2....}},
+            then(
+                function(res){请求成功！},
+                function(res){请求失败})
+            );
+        -->
+        <button v-on:click="search()">按钮</button>
+    </div>
+
+    <!-- js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.0"></script>
+    <!-- <script src="js/vue.js"></script>
+    <script src="js/vue-resource1.5.0.js"></script> -->
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+
+            },
+            methods: {
+                search: function () {
+                    this.$http.get("sum.php", {
+                        params:{
+                            a:3,
+                            b:10
+                        }
+                    }).then(
+                        function (res) {
+                            console.log(res.data);
+                        },
+                        function (res) {
+                            console.log(res.status);
+                        }
+                    )
+
+                }
+            },
+        });
+    </script>
+</body>
+
+</html>

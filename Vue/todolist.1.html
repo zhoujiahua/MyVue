@@ -26,7 +26,7 @@
 
         .btn {
             cursor: pointer;
-            background-color: green ;
+            background-color: green;
             color: #fff;
             display: inline-block;
             padding: 3px 5px;
@@ -56,18 +56,22 @@
             <h1>任务列表</h1>
             <p>任务总数：{{ arr.length }} ;还有：{{ choose() }}未完成；【
                 <span v-bind:class="{ btn:true }" @click="finish()">完成</span>】</p>
-            <ul v-for="item in arr">
-                <li v-bind:class='{finish:item.bol}'>
-                    <label>
-                        <input type="checkbox" v-model="item.bol">{{ item.desc }}
-                    </label>
+            <ul v-for="(item, index) in arr">
+                <li v-bind:class="{finish:item.bol}">
+                    <input type="checkbox" v-model="item.bol" v-show="!item.edit">
+                    <p></p>
+                    <span @click="edit(index)">{{ item.desc }}</span>
+                    <p></p>
+                    <span v-text="item.desc" v-show="!item.edit" v-on:click="edit(index)"></span>
+                    <p></p>
+                    <input type="text" v-model="item.desc" v-show="item.edit" @blur="item.edit=false">
+                    <!-- @事件名称='函数/简单的js代码' -->
                 </li>
             </ul>
 
             <input type="text" class="add" v-model="msg">
-            <button @click='add()'>添加</button>
+            <button @click="add()">添加</button>
         </div>
-
 
     </div>
     <!-- JS -->
@@ -78,19 +82,23 @@
                 // arr: ['吃饭', '睡觉', '打豆豆', '吃鸡', 'LOL', 'CS'],
                 arr: [{
                         desc: '吃饭',
-                        bol: false
+                        bol: false,
+                        edit: false,
                     },
                     {
                         desc: '睡觉',
-                        bol: false
+                        bol: false,
+                        edit: false,
                     },
                     {
                         desc: '打豆豆',
-                        bol: false
+                        bol: false,
+                        edit: false,
                     },
                     {
                         desc: '吃鸡',
-                        bol: false
+                        bol: false,
+                        edit: false,
                     },
 
                 ],
@@ -103,7 +111,7 @@
                         this.arr.push({
                             desc: this.msg,
                             bol: false
-                        }), this.msg = ''
+                        }), this.msg = ""
                     } else {
                         alert("输入错误");
                     }
@@ -127,6 +135,12 @@
                             this.arr.push(temp[i]);
                         }
                     }
+                },
+                edit: function (i) {
+                    if (this.arr[i].bol) {
+                        return;
+                    }
+                    this.arr[i].edit = true;
                 }
             }
         });

@@ -13,18 +13,19 @@
 
     <script>
        $.ajax({
-           url:'http://v.juhe.cn/toutiao/index?',
+           url:'http://v.juhe.cn/toutiao/index',
            type:'get',
+ contentType:"application/json; charset=utf-8",
            data:{
             //    dtype:'json',
                key:'e6ce9e8fd1b6d1e6e40b74b9d6a6aff8',
                type:'top'
            },
-           dataType:'json',
            success:function(info){
                console.log(info);
            },
            error:function(error,Msgerror){
+               debugger;
                console.log(Msgerror);
            }
 

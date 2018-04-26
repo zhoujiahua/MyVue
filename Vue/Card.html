@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        [v-cloak] {
+            display: none;
+        }
+
+        .w {
+            width: 1200px;
+            margin: 0 auto;
+        }
+
+        ul,
+        li {
+            list-style: none;
+        }
+
+        .card-list {
+            width: 300px;
+            padding: 30px 50px;
+            background-color: #eee;
+            border: 1px solid #000;
+        }
+
+        .card-li li input {
+            height: 21px;
+            width: 230px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card w" id="app" v-cloak>
+        <div class="card-list">
+            <h1>{{ msg }}</h1>
+            <div class="card-li">
+                <ul>
+                    <li>
+                        <input type="text">
+                        <button>搜索</button>
+                    </li>
+                    <li>
+                        <strong>1</strong>
+                        <span>{{}}</span>
+                    </li>
+                    <li>
+                        <strong>2</strong>
+                        <span>{{}}</span>
+                    </li>
+                    <li>
+                        <strong>3</strong>
+                        <span>{{}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- JS -->
+    <script src="js/jQuery v1.9.1.min.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/vue-resource1.5.0.js"></script>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                msg: "身份证查询",
+            },
+            methods: {
+                search:function(){
+                    
+                }
+            },
+
+        });
+    </script>
+</body>
+
+</html>

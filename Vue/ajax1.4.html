@@ -6,30 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <script src="js/jQuery v1.9.1.min.js"></script>
+    <script src="js/jQuery.min.js"></script>
 </head>
 
 <body>
 
     <script>
-       $.ajax({
-           url:'http://v.juhe.cn/toutiao/index',
-           type:'get',
- contentType:"application/json; charset=utf-8",
-           data:{
-            //    dtype:'json',
-               key:'e6ce9e8fd1b6d1e6e40b74b9d6a6aff8',
-               type:'top'
-           },
-           success:function(info){
-               console.log(info);
-           },
-           error:function(error,Msgerror){
-               debugger;
-               console.log(Msgerror);
-           }
+        $.ajax({
+            url: 'http://v.juhe.cn/toutiao/index?type=top&key=4df3048f1e4160079340c98142832328',
+            type: 'get',
+            // data: {
+            //     key: 'e6ce9e8fd1b6d1e6e40b74b9d6a6aff8',
+            //     type: 'top'
+            // },
+            //dateType: "json",
+            success: function (info) {
+                console.log(info);
+                debugger
+            },
+            error: function (error, Msgerror) {
+                debugger;
+                console.log(Msgerror);
+            }
 
-       });
+        });
     </script>
 </body>
 

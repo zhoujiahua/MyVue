@@ -44,41 +44,73 @@
     <div class="card w" id="app" v-cloak>
         <div class="card-list">
             <h1>{{ msg }}</h1>
+            <p v-text="uid"></p>
+            <p>
+                <input type="text" v-model="uid">
+                <button v-on:click="search()">搜索</button>
+            </p>
             <div class="card-li">
                 <ul>
                     <li>
-                        <input type="text">
-                        <button>搜索</button>
-                    </li>
-                    <li>
-                        <strong>1</strong>
-                        <span>{{}}</span>
-                    </li>
-                    <li>
-                        <strong>2</strong>
-                        <span>{{}}</span>
-                    </li>
-                    <li>
-                        <strong>3</strong>
-                        <span>{{}}</span>
+                        <p>
+                            <strong>性别：</strong>
+                            <span v-if="true">{{ arr.sex }}</span>
+                            <span v-else>{{ arr.address }}</span>
+                        </p>
+                        <p>
+                            <strong>出生年月：</strong>
+                            <span>{{ arr.birthday }}</span>
+                        </p>
+                        <p>
+                            <strong>所在地址：</strong>
+                            <span>{{ arr.address }}</span>
+                        </p>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
     <!-- JS -->
-    <script src="js/jQuery v1.9.1.min.js"></script>
+    <!-- <script src="js/jQuery v1.9.1.min.js"></script> -->
     <script src="js/vue.js"></script>
     <script src="js/vue-resource1.5.0.js"></script>
     <script>
+        Vue.filter = ("ea", function (val) {
+            return "-----------";
+
+        });
         var vm = new Vue({
             el: "#app",
             data: {
                 msg: "身份证查询",
+                uid: "",
+                arr: [],
             },
             methods: {
-                search:function(){
-                    
+                search: function () {
+                    // alert(this.uid);
+                    let ar = this;
+                    this.$http.get(
+                        "http://route.showapi.com/25-3", {
+                            params: {
+                                showapi_appid: "62439",
+                                showapi_sign: "5c01b361fae148a7aad1c6d0eaa84d38",
+                                id: this.uid,
+                                type: "json",
+                            }
+                        }
+                    ).then(
+                        function (res) {
+                            // console.log(res.body.remark);
+                            ar.arr = res.body.showapi_res_body.retData;
+                            console.log(ar.arr);
+                            // debugger
+                        },
+                        function (res) {
+                            console.log("error");
+                        }
+                    );
+
                 }
             },
 

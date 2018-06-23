@@ -24,7 +24,7 @@
             background-color: #eee;
         }
     </style>
-    <script src="js/jQuery v1.9.1.min.js"></script>
+    <script src="js/jQuery.min.js"></script>
     <script src="js/vue.js"></script>
 </head>
 
@@ -55,53 +55,53 @@
         </div>
 
     </div>
-
+    <script src="https://cdn.bootcss.com/jquery/1.9.1/jquery.js"></script>
     <script>
-        var vm = new Vue({
-            el: "#app",
-            data: {
-                uid: "",
-                uArr: [],
-            },
-            methods: {
-                fn: function () {
-                    if (this.uid != "") {
-                        getAjax(this.uid);
-                    } else {
-                        alert("请输入正确的内容！");
-                    }
+        /* var vm = new Vue({
+                            el: "#app",
+                            data: {
+                                uid: "",
+                                uArr: [],
+                            },
+                            methods: {
+                                fn: function () {
+                                    if (this.uid != "") {
+                                        getAjax(this.uid);
+                                    } else {
+                                        alert("请输入正确的内容！");
+                                    }
 
-                }
-            },
-
-
-        });
-
-        function getAjax(str) {
-            // let arr = this;
-            $.ajax({
-                type: "get",
-                url: "http://apis.juhe.cn/idcard/index",
-                data: {
-                    cardno: str,
-                    dtype: 'json',
-                    key: '44d1cbaa1665151ec1514e685b68a764'
-                },
-                error: function (error, Message) {
-                    console.log(Message);
-                },
-                dataType: "jsonp",
-                success: function (info) {
-                    // arr.uArr = info.result;
-                    // console.log(arr.uArr);
-                    var  arr = info.result;
-                    console.log(arr);
-                    return  arr;
-                }
-            })
+                                }
+                            },
 
 
-        }
+                        }); */
+        $(function () {
+            getAjax();
+
+            function getAjax() {
+                // let arr = this;
+                $.ajax({
+                    type: "get",
+                    url: "http://v.juhe.cn/toutiao/index",
+                    dataType: "json",
+                   
+                    data: {
+                        type: "top",
+                        key: "e6ce9e8fd1b6d1e6e40b74b9d6a6aff8",
+                    },
+                    success: function (res) {
+                        console.log(res);
+                        debugger
+                    },
+
+                    error: function (error, Message) {
+                        console.log(Message);
+                    },
+
+                })
+            }
+        })
     </script>
 </body>
 

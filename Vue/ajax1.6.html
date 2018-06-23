@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul,
+        li {
+            list-style: none;
+        }
+
+        .music-c {
+            width: 1200px;
+            margin: 0 auto;
+        }
+
+        .music-c ul li {
+            float: left;
+            margin: 30px 20px 0 0;
+            width: 20%;
+            text-align: center;
+        }
+
+        .music-c ul li a {
+            text-decoration: none;
+        }
+
+        .music-c li img {
+            width: 100%;
+            height: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    
+    
+    <div class="music-c">
+        <ul class="js_music"></ul>
+    </div>
+
+    <!-- JS -->
+    <script src="https://cdn.bootcss.com/jquery/1.9.1/jquery.js"></script>
+    <script>
+        $(function () {
+            //时间函数
+            function formatterDateTime() {
+                var date = new Date()
+                var month = date.getMonth() + 1
+                var datetime = date.getFullYear() +
+                    "" // "年"
+                    +
+                    (month >= 10 ? month : "0" + month) +
+                    "" // "月"
+                    +
+                    (date.getDate() < 10 ? "0" + date.getDate() : date
+                        .getDate()) +
+                    "" +
+                    (date.getHours() < 10 ? "0" + date.getHours() : date
+                        .getHours()) +
+                    "" +
+                    (date.getMinutes() < 10 ? "0" + date.getMinutes() : date
+                        .getMinutes()) +
+                    "" +
+                    (date.getSeconds() < 10 ? "0" + date.getSeconds() : date
+                        .getSeconds());
+                return datetime;
+            }
+
+            $.ajax({
+                type: "post",
+                url: "http://route.showapi.com/213-1",
+                dataType: "json",
+                data: {
+                    "showapi_timestamp": formatterDateTime(),
+                    "showapi_appid": '62439', //这里需要改成自己的appid
+                    "showapi_sign": '5c01b361fae148a7aad1c6d0eaa84d38', //这里需要改成自己的应用的密钥secret
+                    "keyword": "佛系少女",
+                    "page": "1"
+                },
+                success: function (d) {
+                    console.log(d)
+                    // debugger
+                    var oArry = d.showapi_res_body.pagebean,
+                        oCount = oArry.allNum,
+                        oPages = oArry.allPages,
+                        oList = oArry.contentlist;
+                    var lists = "";
+                    $.each(oList, function (index, iteam) {
+                        console.log(oList[index])
+                        lists += "<li><a href=" + iteam.m4a + " target = '_black'>" +
+                            iteam.songname + "</a><img src=" + iteam.albumpic_big +
+                            "></img></li>"
+                    })
+
+                    $(lists).appendTo(".js_music");
+                }
+            })
+        })
+    </script>
+
+</body>
+
+</html>

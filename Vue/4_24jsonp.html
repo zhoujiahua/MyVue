@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul,
+        ol {
+            list-style: none;
+        }
+
+        .clearfix:before,
+        .clearfix:after {
+            content: "";
+            display: table;
+        }
+
+        .clearfix:after {
+            clear: both;
+        }
+
+        .clearfix {
+            *zoom: 1;
+            /*IE/7/6*/
+        }
+
+        .w {
+            width: 1200px;
+            margin: 0 auto;
+        }
+
+        .fl {
+            float: left
+        }
+
+        .fr {
+            float: right
+        }
+
+        /* --------------------------- */
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <div class="head w">
+                <!--  
+                语法：使用promise 语法规范
+                常见交互类型：get、post、jsonp 
+                1.get请求
+                    this.$http.get("url",{params:{a:1,b:2...}})
+                    .then(function(res){处理请求成功},function(res){处理请求失败}); 
+                2.post请求
+                    this.$http.post("url",{a:1,b:2...},{emulateJSON:true})
+                    .then({function(res){处理请求成功},function(res){处理请求失败}})
+                    //参数传值：{参数1：值1,参数2：值2...}
+                    //{emulateJSON:true}模拟json数据格式，将参数传递过去
+                3.jsonp请求
+                    this.$http.jsonp("url",{params:{a:1,b:2...}},{emulateJSON:true})
+                    .then({function(res){处理请求成功},function(res){处理请求失败}})
+                    
+                    //什么时候使用什么类型请求
+                    get,参数拼接url上，一般保密信息不去使用，对文件传输大小有限制
+                    post,允许传递数据大小 => 大
+
+                    使用那种方式请求，是由后台开发人员决定的
+                    接口文档中，会详细标注，使用什么请求方式
+                -->
+            </div>
+        </div>
+        <div class="main">
+            <div class="w content">
+                <div id="app">
+                    <button @click="search()">点击展示</button>
+                    <ul>
+                        <li>{{ msg }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer"></div>
+    </div>
+
+    <!-- JS -->
+    <!-- <script src="js/jQuery.min.js"></script> -->
+    <!-- <script src="js/vue.js"></script> -->
+    <script src="https://cdn.bootcss.com/jquery/1.9.1/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.js"></script>
+    <script src="js/vue-resource1.5.0.js"></script>
+    <script src="js/vue-router.js"></script>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                msg: "123456"
+            },
+            methods: {
+                search: function () {
+                    //post请求实例
+					this.$http.jsonp("abc.json",{params:{}},{emulateJSON:true}).then(function(res){
+						console.log(res);
+					},function(res){
+						console.log(res);
+					});
+				  
+				}
+            }
+        });
+    </script>
+</body>
+
+</html>

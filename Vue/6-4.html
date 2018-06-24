@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0,user-scalable=0" >
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul,
+        ol {
+            list-style: none;
+        }
+
+        .clearfix:before,
+        .clearfix:after {
+            content: "";
+            display: table;
+        }
+
+        .clearfix:after {
+            clear: both;
+        }
+
+        .clearfix {
+            *zoom: 1;
+            /*IE/7/6*/
+        }
+
+        .w {
+            width: 1200px;
+            margin: 0 auto;
+        }
+
+        .fl {
+            float: left
+        }
+
+        .fr {
+            float: right
+        }
+
+        /* --------------------------- */
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <!-- 
+               局部组件的定义
+               语法：
+                var vm =new Vue({
+                    el:"#m3",
+                    components:{
+                        "1k-number":{
+                            template:"<div><span @click = 'num-=1'>-</span></div>",
+                            data:function(){
+                                return share;
+                            },
+                            methods:{
+
+                            }
+
+                        }
+                    }
+                })
+            -->
+
+        </div>
+        <div class="main">
+            <div class="w content">
+                <div id="box1">
+                    <test></test>
+                    <p>--------------------------</p>
+                    <teo></teo>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <template id="t1">
+                <div>
+                    <h1>哈哈</h1>
+                    <ul>
+                        <li>{{ name }}</li>
+                        <li>{{ sex }}</li>
+                    </ul>
+                    <button @click="fn1()">aaaa</button>
+                </div>
+            </template>
+
+            <template id="t2">
+                <div>
+                    <h1>哈哈</h1>
+                    <ul>
+                        <li>{{ msg }}</li>
+                        <li>{{ id }}</li>
+                    </ul>
+                    <button @click="fn2()">bbbb</button>
+                </div>
+            </template>
+        </div>
+    </div>
+
+    <!-- JS -->
+    <!-- <script src="js/jQuery.min.js"></script> -->
+    <!-- <script src="js/vue.js"></script> -->
+    <script src="https://cdn.bootcss.com/jquery/1.9.1/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.js"></script>
+    <script src="js/vue-resource1.5.0.js"></script>
+    <script src="js/vue-router.js"></script>
+    <script>
+        var vm1 = new Vue({
+            el: "#box1",
+            data: {
+
+            },
+            //局部组件的定义方式
+            //如果组件命名使用了驼峰命名法，那么在调用时，需要用"-"连接的方式，替代驼峰
+            //每一个组件，相当于一个完整的Vue实例
+            //所以组件之间的作用域完全独立的，组件之间的值不能够公用
+            //在哪个实例中定义，就只能在对应的容器中进行调用
+            //不能够在全局进行使用
+            components: {
+                //组件名称
+                "test": {
+                    // template:"<h1>你好！</h1>"
+                    template: "#t1",
+                    data: function () {
+                        return {
+                            name: "JiaHua",
+                            sex: "18"
+                        }
+                    },
+                    methods: {
+                        fn1: function () {
+                            alert("组件一");
+                        }
+                    }
+                },
+                "teo": {
+                    template: "#t1",
+                    data: function () {
+                        return {
+                            msg: "呵呵",
+                            id: "1234343"
+                        }
+                    },
+                    methods: {
+                        fn2: function () {
+                            alert("组件二")
+                        }
+                    }
+
+                }
+
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul,
+        ol {
+            list-style: none;
+        }
+
+        .clearfix:before,
+        .clearfix:after {
+            content: "";
+            display: table;
+        }
+
+        .clearfix:after {
+            clear: both;
+        }
+
+        .clearfix {
+            *zoom: 1;
+            /*IE/7/6*/
+        }
+
+        .w {
+            width: 1200px;
+            margin: 0 auto;
+        }
+
+        .fl {
+            float: left
+        }
+
+        .fr {
+            float: right
+        }
+
+        /* --------------------------- */
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <!-- 
+                全局组件
+                    语法：
+                    Vue.component("name",{
+                        template:"<h1>我是组件</h1>";
+                    })
+                全局组件的调用
+                    组件的调用方法：<组件名></组件名>
+                    组件的作用域：全局给范围均调用
+                
+                全局组件的定义
+                    数据的定义：
+                    data：function(){
+                        return{
+                            a:1,
+                            b:2,
+                            c:3
+                        }
+                    }
+                    
+                小结
+                    组件中数据的定义：需要以函数返回值的形式定义数据
+                    组件的调用：组件的本质为标签，调用方式与调用标签相同
+             -->
+        </div>
+        <div class="main">
+            <div class="w content">
+                <div id="box1">
+                    <h1>模块一</h1>
+                    <test></test>
+                    <test></test>
+                </div>
+                <div id="box2">
+                    <h1>模块二</h1>
+                    <test></test>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <template id="t">
+                <div>
+                    <!-- <img src="" alt=""> -->
+                    <h1>Hello</h1>
+                    <button type="button" @click="fn()">按钮</button>
+                    <ul>
+                        <li>111111</li>
+                        <li>111111</li>
+                        <li>111111</li>
+                        <li>111111</li>
+                        <li>{{ msg }}</li>
+                        <li>{{ name }}</li>
+                    </ul>
+                </div>
+            </template>
+        </div>
+    </div>
+
+    <!-- JS -->
+    <!-- <script src="js/jQuery.min.js"></script> -->
+    <!-- <script src="js/vue.js"></script> -->
+    <script src="https://cdn.bootcss.com/jquery/1.9.1/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.js"></script>
+    <script src="js/vue-resource1.5.0.js"></script>
+    <script src="js/vue-router.js"></script>
+    <script>
+        //全局组件
+        //组件封装
+        //如果想要在HTML结构中，写入多个标签，需要一个外层容器
+        //组件一
+        Vue.component("test", {
+            // template:"<h1>你好</h1>"
+            // template:"<div><p>Hello</p><span>Wprld</span></div>"
+            // template:""
+            template: "#t",
+            data: function () {
+                return {
+                    msg: "哈哈",
+                    name: "嘿嘿"
+                }
+            },
+            methods: {
+                fn: function () {
+                    alert("按钮");
+                }
+            }
+        })
+
+        //实例一
+        var vm1 = new Vue({
+            el: "#box1",
+            data: {
+
+            },
+        })
+
+        //实例二
+        var vm2 = new Vue({
+            el: "#box2",
+            data: {
+
+            }
+        })
+    </script>
+</body>
+
+</html>

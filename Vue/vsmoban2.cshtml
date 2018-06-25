@@ -1,0 +1,111 @@
+@{
+    bool anonymousControlFlag = CNKI.TPI.Web.Base.ConfigHelper.IsAnonymousControlEnabled();
+    string anonymousUsername = CNKI.TPI.Web.Base.ConfigHelper.GetAnonymousAccount();
+    CNKI.TPI.Web.Search.Model.LoginUserInfo userInfo = CNKI.TPI.Web.Base.SessionHelper.GetUserInfo();
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="秦始皇、皇帝陵、博物院" />
+    <meta name="description" content="秦始皇帝陵博物院" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>@ViewBag.Title - 秦陵学术资源网</title>
+
+    <link href="~/QinLingThemes/Boostrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/QinLingThemes/Boostrap/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="~/QinLingThemes/css/ql-base.css" />
+    @RenderSection("css", false)
+
+    @* Bootstrap 兼容IE低版本JS *@
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+      <script src="~/QinLingThemes/Boostrap/js/html5shiv.min.js"></script>
+      <script src="~/QinLingThemes/Boostrap/js/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+    <div class="ql-wrapper">
+        @* header *@
+        <div class="ql-header ql-clearfix">
+            <div class="ql-head">
+                <div class="ql-head-top ql-clearfix ">
+                    <div class="ql-w">
+                        <div class="ql-top-nav  ql-fr">
+                            <ul>
+                                <li class="ql-home"><a href="/">首页</a></li>
+                                <li class="ql-nav-x">|</li>
+                                <li><a href="/QinLing/Register">注册</a></li>
+                                <li class="ql-nav-x">|</li>
+                                @if (CNKI.TPI.Web.Base.SessionHelper.IsUserInfoExsit()
+                    && ((anonymousControlFlag && !anonymousUsername.Equals(userInfo.UserCode)) || !anonymousControlFlag))
+                                {
+                                    <li>
+                                        <span>@(userInfo.UserCode)，您好！</span>
+                                        @if (userInfo.LoginType == 1)
+                                        {
+                                            using (Html.BeginForm("LogOffSSO", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                <a href="javascript:document.getElementById('logoutForm').submit()">注销</a>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                <a href="javascript:document.getElementById('logoutForm').submit()">注销</a>
+                                            }
+                                        }
+                                    </li>
+                                    <li><a href="~/UserCenter/UserCenterIndex" target="_blank">个人中心</a></li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        @if (CNKI.TPI.Web.Base.ConfigHelper.IsSSOEnabled())
+                                        {
+                                            <a href="~/Account/LoginSSO?ReturnUrl=@Uri.EscapeDataString(Request.Url.AbsoluteUri)">登录</a>
+                                        }
+                                        else
+                                        {
+                                            @Html.ActionLink("登录", "Login", "Account", routeValues: new { ReturnUrl = Request.RawUrl }, htmlAttributes: new { id = "loginLink" })
+                                        }
+                                    </li>
+                                }
+
+                                @if (CNKI.TPI.Web.Base.SessionHelper.IsUserInfoExsit() && CNKI.TPI.Web.Base.SessionHelper.GetUserInfo().Role.Any(a => a.Name == "ADMINISTRATORS"))
+                                {
+                                    <li><a href="~/Admin">登录后台</a></li>
+                                }
+                                @if (CNKI.TPI.Web.Base.ConfigHelper.IsSSOEnabled()
+                    && ((!CNKI.TPI.Web.Base.SessionHelper.IsUserInfoExsit()) || (anonymousControlFlag && anonymousUsername.Equals(userInfo.UserCode))))
+                                {
+                                    <li><a href="~/Account/Login?ReturnUrl=@Uri.EscapeDataString(Request.RawUrl)">本地账号登录</a></li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @* main *@
+        <div class="ql-main">
+            @RenderBody()
+        </div>
+
+        @* footer *@
+        @{Html.RenderPartial("~/Views/Shared/_Footer.cshtml");}
+    </div>
+
+    <script type="text/javascript" src="~/QinLingThemes/js/jquery.min.js"></script>
+    <script src="~/QinLingThemes/Boostrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/QinLingThemes/js/ql_base.js"></script>
+    @RenderSection("script", false)
+</body>
+</html>

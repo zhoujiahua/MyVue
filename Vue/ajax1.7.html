@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/paging.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul,
+        ol {
+            list-style: none;
+        }
+
+        .clearfix:before,
+        .clearfix:after {
+            content: "";
+            display: table;
+        }
+
+        .clearfix:after {
+            clear: both;
+        }
+
+        .clearfix {
+            *zoom: 1;
+            /*IE/7/6*/
+        }
+
+        .w {
+            width: 1200px;
+            margin: 0 auto;
+        }
+
+        .fl {
+            float: left
+        }
+
+        .fr {
+            float: right
+        }
+
+        /* --------------------------- */
+
+        .con-list li {
+            padding: 15px 0;
+            border-bottom: 1px dashed #ccc;
+        }
+
+        .con-list li h3 {
+            font: 600 14px/35px "";
+        }
+
+        .con-list li p {
+            font: 500 13px/30px "";
+            text-indent: 2em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="header"></div>
+        <div class="main">
+            <div class="w content">
+                <div class="app">
+                    <button v-on:click="fn()">按钮</button>
+                    <ul class="con-list">
+                        <li v-for="item in arr">
+                            <h3>{{ item.title }}</h3>
+                            <div v-html="item.text"></div>
+                            <p>{{ item.ct }}</p>
+                        </li>
+                    </ul>
+
+                    <!--分页-->
+                    <div class="con-page">
+                        <div class="page-list clearfix">
+                            <div class="page_div  page"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer"></div>
+    </div>
+
+    <!-- JS -->
+    <!-- <script src="js/jQuery.min.js"></script> -->
+    <!-- <script src="js/vue.js"></script> -->
+    <script src="https://cdn.bootcss.com/jquery/1.9.1/jquery.js"></script>
+    <script src="js/paging.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.js"></script>
+    <script src="js/vue-resource1.5.0.js"></script>
+    <script src="js/vue-router.js"></script>
+    <script>
+        $(function () {
+
+            /*    //分页函数
+               function paramsPage() {
+                   $(".page").paging({
+                       pageNo: 1,
+                       totalPage: 10,
+                       totalSize: 20,
+                       callback: function (num) { // var lods = loadData(num); // getData(lods);
+                           alert(num)
+                           paramsData(num);
+                       }
+                   });
+               }
+
+               paramsData(1);
+               //构造参数
+               function paramsData(paramsIndex) {
+                   return {
+                       showapi_timestamp: formatterDateTime(),
+                       showapi_appid: '62439',
+                       showapi_sign: '5c01b361fae148a7aad1c6d0eaa84d38',
+                       page: paramsIndex,
+                       maxResult: "20"
+                   }
+               }; */
+
+
+            //创建Vue实例
+            var vm = new Vue({
+                el: ".app",
+                data: {
+                    type: 'post',
+                    getUrl: 'http://route.showapi.com/341-1',
+                    parData: {
+                        showapi_timestamp: formatterDateTime(),
+                        showapi_appid: '62439',
+                        showapi_sign: '5c01b361fae148a7aad1c6d0eaa84d38',
+                        page: "1",
+                        maxResult: "20"
+                    },
+                    arr: [],
+                },
+                mounted: function () {
+                    this.search();
+                },
+                methods: {
+                    fn: function () {
+                        // alert(this.formatterDateTime());
+                        this.search();
+                        this.paramsPage();
+                    },
+                    /* 数据请求 */
+                    search: function () {
+                        let list = this;
+                        this.$http.post(this.getUrl, this.parData, {
+                            emulateJSON: true
+                        }).then(
+                            function (res) {
+                                let oArray = res.data.showapi_res_body;
+                                list.arr = oArray.contentlist;
+                                console.log(list.arr)
+                                // debugger
+                            },
+                            function (error) {
+                                console.log(error)
+                            })
+                    },
+
+                }
+            });
+
+            //事件函数
+            function formatterDateTime() {
+                var date = new Date(),
+                    month = date.getMonth() + 1,
+                    datetime;
+                datetime = date.getFullYear() +
+                    "" // "年"
+                    +
+                    (month >= 10 ? month : "0" + month) +
+                    "" // "月"
+                    +
+                    (date.getDate() < 10 ? "0" + date.getDate() : date
+                        .getDate()) +
+                    "" +
+                    (date.getHours() < 10 ? "0" + date.getHours() : date
+                        .getHours()) +
+                    "" +
+                    (date.getMinutes() < 10 ? "0" + date.getMinutes() : date
+                        .getMinutes()) +
+                    "" +
+                    (date.getSeconds() < 10 ? "0" + date.getSeconds() : date
+                        .getSeconds());
+                return datetime;
+            }
+        })
+    </script>
+</body>
+
+</html>
